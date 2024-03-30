@@ -1,0 +1,42 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  align-items: center;
+}
+
+.driversInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+  gap: 5rem;
+}
+
+.driversInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.searchData {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+  gap: 5rem;
+}
+
+.information {
+  display: flex;
+  flex-direction: row;
+}
+
+.information h2 {
+  background-color: #033e25;
+  padding: 10px;
+  border-radius: 3%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input {
+  margin-right: 10px;
+}
