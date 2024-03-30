@@ -34,6 +34,7 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 <img src='https://i.gyazo.com/332655d82ffb002bcd451f1906ab6ece.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+[GIF Url](https://i.gyazo.com/332655d82ffb002bcd451f1906ab6ece.gif) 
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with Kap and Gyazo
