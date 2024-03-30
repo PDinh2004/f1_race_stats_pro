@@ -5,22 +5,21 @@ import RaceInformation from './Components/RaceInformation'
 function App() {
   const [standings, setStandings] = useState(null);
   const [raceYear, setRaceYear] = useState("2023");
-  const [buttonState, setButtonState] = useState(true);
   const [team, setTeam] = useState("");
   const [driver, setDriver] = useState("");
   const [wins, setWins] = useState("-999");
   const [points, setPoints] = useState("-999");
 
-  const fetchMeetings = async () => {
-    const response = await fetch(`http://ergast.com/api/f1/${raceYear}/driverStandings.json`);
-    const json = await response.json();
-    setStandings(json.MRData.StandingsTable.StandingsLists[0].DriverStandings);
-    console.log(standings);
-  }
-
   useEffect(() => {
+    const fetchMeetings = async () => {
+      const response = await fetch(`http://ergast.com/api/f1/${raceYear}/driverStandings.json`);
+      const json = await response.json();
+      setStandings(json.MRData.StandingsTable.StandingsLists[0].DriverStandings);
+      console.log(standings);
+    }
+
     fetchMeetings().catch(console.error);
-  }, []);
+  }, [raceYear]);
 
   const calculateAverage = (standings) => {
     let totalPoints = 0;
@@ -73,9 +72,7 @@ function App() {
       <input type='text' placeholder='Enter a year (1950-2024)' style={{width: "15%"}}/>
       <button onClick={() => {
         setRaceYear(document.querySelector('input').value);
-        fetchMeetings().catch(console.error);
-        setTimeout(() => setButtonState(!buttonState), 1000);
-      }}>{buttonState ? "Search" : "Press to Refresh"}</button>
+      }} style={{color: "white"}}>Search</button>
 
       <h1>Season Statistics</h1>
       <div className='information'>
