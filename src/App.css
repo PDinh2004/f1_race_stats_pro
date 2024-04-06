@@ -6,6 +6,29 @@
   align-items: center;
 }
 
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.home-link {
+  border: 1px dotted white;
+  background: #1d1f1d;
+  width: 75px;
+}
+
+ul {
+  list-style: none;
+  margin: 25px 50px 75px 30px;
+}
+
+li.main-list {
+  padding: 25px;
+  border-bottom: solid 3px white;
+  font-size: large;
+}
+
 .driversInfoGrid {
   display: grid;
   grid-template-columns: repeat(4, 2fr);

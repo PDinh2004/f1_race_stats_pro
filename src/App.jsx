@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import RaceInformation from './Components/RaceInformation'
+import { Link } from "react-router-dom";
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList} from 'recharts';
 
 function App() {
   const [standings, setStandings] = useState(null);
@@ -16,10 +17,56 @@ function App() {
       const json = await response.json();
       setStandings(json.MRData.StandingsTable.StandingsLists[0].DriverStandings);
       console.log(standings);
+
     }
 
     fetchMeetings().catch(console.error);
   }, [raceYear]);
+
+  const generateBarChart = () => {
+    let data1 = {};
+
+    for (let i = 0; i < standings.length; i++) {
+      if (data1[standings[i].Driver.nationality] === undefined) {
+        data1[standings[i].Driver.nationality] = {points: parseInt(standings[i].points), numOfPpl: 1};
+      } else {
+        data1[standings[i].Driver.nationality].points += parseInt(standings[i].points);
+        data1[standings[i].Driver.nationality].numOfPpl += 1;
+      };
+    }
+
+    let data = [];
+
+    for (const [key, value] of Object.entries(data1)) {
+      data.push({nationality: key, points: value.points, numOfPpl: value.numOfPpl});
+    }
+
+    return (
+      <ResponsiveContainer width={'100%'} height={500}>
+        <BarChart
+          width={1500}
+          height={500}
+          data={data}
+          margin={{
+            top: 10,
+            right: 0,
+            left: 0,
+            bottom: 0,
+          }}
+          style={{color: "black"}}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="nationality"/>
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="points" stackId="a" fill="pink">
+            <LabelList dataKey="numOfPpl" position="insidetop"/>
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    );
+  }
 
   const calculateAverage = (standings) => {
     let totalPoints = 0;
@@ -54,7 +101,13 @@ function App() {
       (points === "-999" || parseInt(driver.points) === parseInt(points))
       ? (
       <>
-        <h2>{driver.Driver.givenName} {driver.Driver.familyName}</h2>
+        <Link
+          style={{color: "white"}}
+          to={`/driver/${driver.Driver.driverId}`}
+          key={driver.Driver.driverId}
+        >
+          <h2>{driver.Driver.givenName} {driver.Driver.familyName}</h2>
+        </Link>
         <h2>{driver.Constructors[0].name}</h2>
         <h2>{driver.points}</h2>
         <h2>{driver.wins}</h2>
@@ -81,6 +134,11 @@ function App() {
         <h2># of Zero Point Driver(s): {standings ? zeroPointDrivers(standings) : null}</h2>
       </div>
 
+      <h3>Points per Nationality</h3>
+      <p>Number inside the bars represent the number of drivers in those nationalities</p>
+      {standings ? generateBarChart() : null}
+      
+
       <h1>Driver's Standings</h1>
 
       <div className='searchData'>
@@ -103,4 +161,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
