@@ -2,7 +2,7 @@
 
 Submitted by: **Phillip Dinh**
 
-This web app: **insert description**
+This web app: **Displays driver's standings each year from 1950-2024 (with more information on each driver and a graph!)**
 
 Time spent: **6** hours spent in total
 
